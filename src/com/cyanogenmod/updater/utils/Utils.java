@@ -19,6 +19,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Environment;
 import android.os.PowerManager;
 import android.os.SystemProperties;
@@ -55,11 +56,11 @@ public class Utils {
     }
 
     public static String getDeviceType() {
-        return SystemProperties.get("ro.cm.device");
+        return Build.PRODUCT;
     }
 
     public static String getInstalledVersion() {
-        return SystemProperties.get("ro.cm.version");
+        return SystemProperties.get("ro.katsuna.version");
     }
 
     public static int getInstalledApiLevel() {
