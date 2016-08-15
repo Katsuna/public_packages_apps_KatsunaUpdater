@@ -287,7 +287,7 @@ public class UpdateCheckService extends IntentService
     private UpdateInfo parseUpdateJSONObject(JSONObject obj, int updateType) throws JSONException {
         UpdateInfo ui = new UpdateInfo.Builder()
                 .setFileName(obj.getString("filename"))
-                .setDownloadUrl(obj.getString("url"))
+                .setDownloadUrl(obj.getString("url") + "/" + Utils.getDeviceType() + "/" + obj.getString("filename"))
                 .setChangelogUrl(obj.getString("changes"))
                 .setMD5Sum(obj.getString("md5sum"))
                 .setApiLevel(obj.getInt("api_level"))
