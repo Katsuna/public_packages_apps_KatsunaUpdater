@@ -208,7 +208,7 @@ public class UpdateCheckService extends IntentService
             return URI.create(propertyUpdateUri);
         }
 
-        String configUpdateUri = getString(R.string.conf_update_server_url_def);
+        String configUpdateUri = getString(R.string.conf_update_server_url_def) + "/" + Utils.getDeviceType() + ".json";
         return URI.create(configUpdateUri);
     }
 
