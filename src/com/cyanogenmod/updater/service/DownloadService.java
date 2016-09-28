@@ -190,6 +190,9 @@ public class DownloadService extends IntentService
         String fullFilePath = "file://" + getUpdateDirectory().getAbsolutePath() +
                 "/" + mInfo.getFileName() + ".partial";
 
+        // Print the full download url into logcat
+        Log.v(TAG, "Update file download url: " + mInfo.getDownloadUrl());
+
         long downloadId = enqueueDownload(mInfo.getDownloadUrl(), fullFilePath);
 
         // Store in shared preferences
