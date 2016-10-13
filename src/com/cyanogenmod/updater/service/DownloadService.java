@@ -69,11 +69,11 @@ public class DownloadService extends IntentService
             return;
         }
 
-        try {
-            getIncremental();
-        } catch (IOException e) {
+        //try {
+        //    getIncremental();
+        //} catch (IOException e) {
             downloadFullZip();
-        }
+        //}
     }
 
     private void getIncremental() throws IOException {
