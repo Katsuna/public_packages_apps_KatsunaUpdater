@@ -44,8 +44,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/*import com.android.internal.util.cm.ScreenType;*/
-
 import com.cyanogenmod.updater.misc.Constants;
 import com.cyanogenmod.updater.misc.State;
 import com.cyanogenmod.updater.misc.UpdateInfo;
@@ -180,11 +178,6 @@ public class UpdatesSettings extends PreferenceActivity implements
 
             // Turn on the Options Menu
             invalidateOptionsMenu();
-        }
-
-        // If running on a phone, remove padding around the listview
-        if (!ScreenType.isTablet(this)) {
-            getListView().setPadding(0, 0, 0, 0);
         }
     }
 
