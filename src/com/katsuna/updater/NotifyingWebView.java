@@ -7,7 +7,7 @@
  * or at https://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-package com.cyanogenmod.updater;
+package com.katsuna.updater;
 
 import android.content.Context;
 import android.util.AttributeSet;

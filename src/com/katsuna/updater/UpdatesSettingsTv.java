@@ -7,7 +7,7 @@
  * or at https://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-package com.cyanogenmod.updater;
+package com.katsuna.updater;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,8 +17,8 @@ import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 
-import com.cyanogenmod.updater.misc.Constants;
-import com.cyanogenmod.updater.utils.Utils;
+import com.katsuna.updater.misc.Constants;
+import com.katsuna.updater.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;

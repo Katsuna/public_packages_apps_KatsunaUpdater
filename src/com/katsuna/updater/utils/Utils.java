@@ -7,7 +7,7 @@
  * or at https://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-package com.cyanogenmod.updater.utils;
+package com.katsuna.updater.utils;
 
 import android.app.AlarmManager;
 import android.app.NotificationManager;
@@ -30,9 +30,9 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.cyanogenmod.updater.R;
-import com.cyanogenmod.updater.misc.Constants;
-import com.cyanogenmod.updater.service.UpdateCheckService;
+import com.katsuna.updater.R;
+import com.katsuna.updater.misc.Constants;
+import com.katsuna.updater.service.UpdateCheckService;
 
 import java.io.File;
 import java.io.IOException;

@@ -7,7 +7,7 @@
  * or at https://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-package com.cyanogenmod.updater;
+package com.katsuna.updater;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -25,8 +25,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cyanogenmod.updater.misc.FetchChangeLogTask;
-import com.cyanogenmod.updater.misc.UpdateInfo;
+import com.katsuna.updater.misc.FetchChangeLogTask;
+import com.katsuna.updater.misc.UpdateInfo;
 
 import java.io.File;
 

@@ -7,7 +7,7 @@
  * or at https://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-package com.cyanogenmod.updater.receiver;
+package com.katsuna.updater.receiver;
 
 import android.app.DownloadManager;
 import android.app.StatusBarManager;
@@ -19,24 +19,24 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.cyanogenmod.updater.R;
-import com.cyanogenmod.updater.misc.Constants;
-import com.cyanogenmod.updater.misc.UpdateInfo;
-import com.cyanogenmod.updater.service.DownloadCompleteIntentService;
-import com.cyanogenmod.updater.service.DownloadService;
-import com.cyanogenmod.updater.utils.Utils;
+import com.katsuna.updater.R;
+import com.katsuna.updater.misc.Constants;
+import com.katsuna.updater.misc.UpdateInfo;
+import com.katsuna.updater.service.DownloadCompleteIntentService;
+import com.katsuna.updater.service.DownloadService;
+import com.katsuna.updater.utils.Utils;
 
 import java.io.IOException;
 
 public class DownloadReceiver extends BroadcastReceiver{
     private static final String TAG = "DownloadReceiver";
 
-    public static final String ACTION_START_DOWNLOAD = "com.cyanogenmod.cmupdater.action.START_DOWNLOAD";
+    public static final String ACTION_START_DOWNLOAD = "com.katsuna.updater.action.START_DOWNLOAD";
     public static final String EXTRA_UPDATE_INFO = "update_info";
 
-    public static final String ACTION_DOWNLOAD_STARTED = "com.cyanogenmod.cmupdater.action.DOWNLOAD_STARTED";
+    public static final String ACTION_DOWNLOAD_STARTED = "com.katsuna.updater.action.DOWNLOAD_STARTED";
 
-    static final String ACTION_INSTALL_UPDATE = "com.cyanogenmod.cmupdater.action.INSTALL_UPDATE";
+    static final String ACTION_INSTALL_UPDATE = "com.katsuna.updater.action.INSTALL_UPDATE";
     static final String EXTRA_FILENAME = "filename";
 
     @Override

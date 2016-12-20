@@ -7,14 +7,14 @@
  * or at https://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-package com.cyanogenmod.updater.misc;
+package com.katsuna.updater.misc;
 
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-import com.cyanogenmod.updater.utils.Utils;
+import com.katsuna.updater.utils.Utils;
 
 import java.io.File;
 import java.io.Serializable;

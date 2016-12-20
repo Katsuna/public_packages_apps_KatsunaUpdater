@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cyanogenmod.updater"
+    package="com.katsuna.updater"
     android:versionCode="4"
     android:versionName="2.3" >
 
@@ -22,7 +22,7 @@
         android:icon="@drawable/ic_launcher"
         android:theme="@style/Theme.Main"
         android:label="@string/app_name"
-        android:name="com.cyanogenmod.updater.UpdateApplication"
+        android:name="com.katsuna.updater.UpdateApplication"
         android:supportsRtl="true">
 
         <activity
@@ -56,24 +56,24 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.cyanogenmod.updater.service.UpdateCheckService" />
-        <service android:name="com.cyanogenmod.updater.service.DownloadService" />
-        <service android:name="com.cyanogenmod.updater.service.DownloadCompleteIntentService" />
+        <service android:name="com.katsuna.updater.service.UpdateCheckService" />
+        <service android:name="com.katsuna.updater.service.DownloadService" />
+        <service android:name="com.katsuna.updater.service.DownloadCompleteIntentService" />
 
-        <receiver android:name="com.cyanogenmod.updater.receiver.UpdateCheckReceiver">
+        <receiver android:name="com.katsuna.updater.receiver.UpdateCheckReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.cyanogenmod.updater.receiver.DownloadReceiver">
+        <receiver android:name="com.katsuna.updater.receiver.DownloadReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
-                <action android:name="com.cyanogenmod.cmupdater.action.START_DOWNLOAD"/>
+                <action android:name="com.katsuna.updater.action.START_DOWNLOAD"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.cyanogenmod.updater.receiver.NotificationClickReceiver">
+        <receiver android:name="com.katsuna.updater.receiver.NotificationClickReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
             </intent-filter>

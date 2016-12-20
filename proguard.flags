@@ -1,4 +1,4 @@
--keep class com.cyanogenmod.updater.UpdatesSettings {
+-keep class com.katsuna.updater.UpdatesSettings {
   *;
 }
 

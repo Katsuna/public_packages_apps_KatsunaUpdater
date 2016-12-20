@@ -7,7 +7,7 @@
  * or at https://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-package com.cyanogenmod.updater.service;
+package com.katsuna.updater.service;
 
 import android.app.DownloadManager;
 import android.app.IntentService;
@@ -16,12 +16,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.cyanogenmod.updater.R;
-import com.cyanogenmod.updater.UpdateApplication;
-import com.cyanogenmod.updater.UpdatesSettings;
-import com.cyanogenmod.updater.misc.Constants;
-import com.cyanogenmod.updater.receiver.DownloadNotifier;
-import com.cyanogenmod.updater.utils.MD5;
+import com.katsuna.updater.R;
+import com.katsuna.updater.UpdateApplication;
+import com.katsuna.updater.UpdatesSettings;
+import com.katsuna.updater.misc.Constants;
+import com.katsuna.updater.receiver.DownloadNotifier;
+import com.katsuna.updater.utils.MD5;
 
 import java.io.File;
 

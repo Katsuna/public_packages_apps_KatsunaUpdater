@@ -7,7 +7,7 @@
  * or at https://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-package com.cyanogenmod.updater.utils;
+package com.katsuna.updater.utils;
 
 import java.io.File;
 import java.io.FilenameFilter;

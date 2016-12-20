@@ -7,7 +7,7 @@
  * or at https://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-package com.cyanogenmod.updater.requests;
+package com.katsuna.updater.requests;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
