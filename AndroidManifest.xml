@@ -45,6 +45,7 @@
                  android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name="com.katsuna.updater.service.DownloadCompleteIntentService"
                  android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service android:name=".service.ABOTAService" />
 
         <receiver android:name="com.katsuna.updater.receiver.BootCheckReceiver">
             <intent-filter>

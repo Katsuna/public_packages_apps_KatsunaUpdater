@@ -51,6 +51,7 @@ import com.katsuna.updater.misc.State;
 import com.katsuna.updater.misc.UpdateInfo;
 import com.katsuna.updater.receiver.DownloadReceiver;
 import com.katsuna.updater.receiver.BootCheckReceiver;
+import com.katsuna.updater.service.ABOTAService;
 import com.katsuna.updater.service.UpdateCheckService;
 import com.katsuna.updater.utils.UpdateFilter;
 import com.katsuna.updater.utils.Utils;
@@ -136,6 +137,40 @@ public class UpdatesSettings extends PreferenceActivity implements
                     }
                 }
                 requestUpdateLayout();
+            } else if (ABOTAService.ACTION_UPDATE_INSTALL_FINISHED.equals(action)) {
+                new AlertDialog.Builder(UpdatesSettings.this)
+                        .setTitle(R.string.ab_update_finished_title)
+                        .setMessage(R.string.ab_update_finished_message)
+                        .setPositiveButton(R.string.dialog_reboot, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Utils.triggerReboot(UpdatesSettings.this);
+                            }
+                        })
+                        .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Do nothing and allow the dialog to be dismissed
+                            }
+                        })
+                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                // Do nothing and allow the dialog to be dismissed
+                            }
+                        })
+                        .show();
+            } else if (ABOTAService.ACTION_UPDATE_INSTALL_ERRORED.equals(action)) {
+                if (mProgressDialog != null) {
+                    mProgressDialog.dismiss();
+                    mProgressDialog = null;
+                }
+
+                mStartUpdateVisible = false;
+                ABOTAService.setABUpdateRunning(false);
+                int errorCode = intent.getIntExtra(ABOTAService.EXTRA_ERROR_CODE, -1);
+                ABOTAService.notifyOngoingABOTA(context, -1, errorCode);
+                Toast.makeText(UpdatesSettings.this, String.format(getString(R.string.installing_zip_failed, errorCode)), Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -951,12 +986,83 @@ public class UpdatesSettings extends PreferenceActivity implements
     public void onStartUpdate(UpdatePreference pref) {
         final UpdateInfo updateInfo = pref.getUpdateInfo();
 
-        // Prevent the dialog from being triggered more than once
+        // Prevent the update from being triggered more than once
         if (mStartUpdateVisible) {
             return;
         }
 
+        if (ABOTAService.isABUpdateRunning()) {
+            Toast.makeText(UpdatesSettings.this, getString(R.string.ab_update_running), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         mStartUpdateVisible = true;
+
+        if (Utils.isABUpdate(this, pref.getUpdateInfo().getFileName())) {
+            startABUpdate(pref);
+        } else {
+            startRecoveryUpdate(pref);
+        }
+    }
+
+    private void startABUpdate(UpdatePreference pref) {
+        final UpdateInfo updateInfo = pref.getUpdateInfo();
+
+        ABOTAService.setABUpdateRunning(true);
+
+        // Get the message body right
+        String dialogBody = getString(R.string.apply_update_dialog_text_ab, updateInfo.getName());
+
+        new AlertDialog.Builder(this)
+            .setTitle(R.string.apply_ab_update_dialog_title)
+            .setMessage(dialogBody)
+            .setPositiveButton(R.string.dialog_update, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    ABOTAService.notifyOngoingABOTA(UpdatesSettings.this, -1, ABOTAService.STATUS_PREPARING_ZIP);
+                    pref.setStyle(UpdatePreference.STYLE_INSTALLING);
+                    Utils.triggerUpdateAB(UpdatesSettings.this, updateInfo.getFileName());
+
+                    try {
+                        Thread.sleep(800);
+                    } catch (Exception e) {
+                        // Ignore.
+                    }
+
+                    new AlertDialog.Builder(UpdatesSettings.this)
+                        .setTitle(R.string.apply_ab_update_dialog_title)
+                        .setMessage(R.string.apply_update_dialog_text_background_ab)
+                        .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Do nothing and allow the dialog to be dismissed
+                            }
+                        })
+                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME));
+                            }
+                        })
+                    .show();
+                }
+            })
+            .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing and allow the dialog to be dismissed
+                }
+            })
+            .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    mStartUpdateVisible = false;
+                }
+            })
+        .show();
+    }
+
+    private void startRecoveryUpdate(UpdatePreference pref) {
+        final UpdateInfo updateInfo = pref.getUpdateInfo();
 
         // Get the message body right
         String dialogBody = getString(R.string.apply_update_dialog_text, updateInfo.getName());
