@@ -751,7 +751,7 @@ public class UpdatesSettings extends PreferenceActivity implements
                             deleteZipUpdate();
                             break;
                         case PERMISSIONS_REQUEST_FOR_DELETE_ALL:
-                            deleteOldUpdates();
+                            deleteOldUpdates(0);
                             break;
                         case PERMISSIONS_REQUEST_FOR_READ_DIR:
                             updateLayout();
@@ -847,7 +847,7 @@ public class UpdatesSettings extends PreferenceActivity implements
                     deleteZipUpdate();
                     break;
                 case PERMISSIONS_REQUEST_FOR_DELETE_ALL:
-                    deleteOldUpdates();
+                    deleteOldUpdates(0);
                     break;
                 case PERMISSIONS_REQUEST_FOR_READ_DIR:
                     updateLayout();
@@ -864,7 +864,7 @@ public class UpdatesSettings extends PreferenceActivity implements
         }
     }
 
-    private boolean deleteOldUpdates() {
+    private boolean deleteOldUpdates(int days) {
         boolean success;
 
         // If storage permissions have been denied on application start and the first time they
@@ -875,8 +875,7 @@ public class UpdatesSettings extends PreferenceActivity implements
             mUpdateFolder = Utils.makeUpdateFolder();
         }
         if (mUpdateFolder.exists() && mUpdateFolder.isDirectory()) {
-            deleteDir(mUpdateFolder);
-            mUpdateFolder.mkdir();
+            deleteFiles(mUpdateFolder, days);
             success = true;
             Toast.makeText(this, R.string.delete_updates_success_message, Toast.LENGTH_SHORT).show();
         } else if (!mUpdateFolder.exists()) {
@@ -890,23 +889,30 @@ public class UpdatesSettings extends PreferenceActivity implements
         return success;
     }
 
-    private static boolean deleteDir(File dir) {
+    public static boolean deleteFiles(File dir, int days) {
+        Log.v(TAG, "deleteFiles is triggered successfully");
+
         if (dir.isDirectory()) {
-            String[] children = dir.list();
-            if (children == null) {
+            File[] files = dir.listFiles();
+            if (files == null) {
                 // An IO or permissions failure; don't crash
-                Log.e(TAG, "deleteDir: dir.list() failed, check storage permissions");
+                Log.e(TAG, "deleteFiles: dir.list() failed, check storage permissions");
                 return false;
             }
-            for (String aChildren : children) {
-                boolean success = deleteDir(new File(dir, aChildren));
-                if (!success) {
-                    return false;
+            for (File file : files) {
+                long diff = new Date().getTime() - file.lastModified();
+
+                if (diff > days * 24 * 60 * 60 * 1000) {
+                    boolean success = file.delete();
+                    Log.v(TAG, "Update directory cleanup, file " +
+                            file.getName() + " is deleted!");
+                    if (!success) {
+                        return false;
+                    }
                 }
             }
         }
-        // The directory is now empty so delete it
-        return dir.delete();
+        return true;
     }
 
     private void showSysInfo() {

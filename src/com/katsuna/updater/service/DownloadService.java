@@ -27,6 +27,7 @@ import com.android.volley.VolleyLog;
 
 import com.katsuna.updater.R;
 import com.katsuna.updater.UpdateApplication;
+import com.katsuna.updater.UpdatesSettings;
 import com.katsuna.updater.misc.Constants;
 import com.katsuna.updater.misc.UpdateInfo;
 import com.katsuna.updater.receiver.DownloadReceiver;
@@ -48,10 +49,12 @@ public class DownloadService extends IntentService
 
     private SharedPreferences mPrefs;
     private UpdateInfo mInfo = null;
+    private static int mDaysBeforeCleanUp;
 
     public static void start(Context context, UpdateInfo ui) {
         Intent intent = new Intent(context, DownloadService.class);
         intent.putExtra(EXTRA_UPDATE_INFO, (Parcelable) ui);
+        mDaysBeforeCleanUp = context.getResources().getInteger(R.integer.config_daysBeforeCleanUp);
         context.startService(intent);
     }
 
@@ -68,6 +71,9 @@ public class DownloadService extends IntentService
             Log.e(TAG, "Intent UpdateInfo extras were null");
             return;
         }
+
+        //cleanup update directory first
+        cleanupUpdateDirectory(getUpdateDirectory());
 
         //try {
         //    getIncremental();
@@ -217,6 +223,11 @@ public class DownloadService extends IntentService
         }
 
         return directory;
+    }
+
+    private void cleanupUpdateDirectory(File dir) {
+        Log.v(TAG, "Cleaning up before starting a new download");
+        UpdatesSettings.deleteFiles(dir, mDaysBeforeCleanUp);
     }
 
     @Override

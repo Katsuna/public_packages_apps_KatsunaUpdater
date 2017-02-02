@@ -10,4 +10,7 @@
     <!--Update Config Strings -->
     <string name="conf_update_server_url_def" translatable="false">http://updater.katsuna.com/public</string>
     <string name="conf_changelog_url" translatable="false">http://localhost/changelog.xml</string>
+
+    <!-- Automated Update Directory Cleanup (files are deleted after X number of days) -->
+    <integer name="config_daysBeforeCleanUp">7</integer>
 </resources>
