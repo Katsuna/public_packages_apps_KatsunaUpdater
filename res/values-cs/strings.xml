@@ -10,8 +10,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- General strings -->
-  <string name="app_name">Aktualizace CM</string>
-  <string name="display_name">Aktualizace CM</string>
+  <string name="app_name">Aktualizace</string>
+  <string name="display_name">Aktualizace</string>
   <string name="unknown">Neznámý</string>
   <!-- Menu and dialog box strings -->
   <string name="menu_refresh">Obnovit</string>

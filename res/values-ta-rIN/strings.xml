@@ -10,7 +10,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- General strings -->
-  <string name="app_name">CM புதுப்பிப்பான்</string>
+  <string name="app_name">புதுப்பிப்பான்</string>
   <string name="display_name">புதுப்பித்தல்கள்</string>
   <string name="unknown">தெரியாதது</string>
   <!-- Menu and dialog box strings -->

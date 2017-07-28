@@ -10,7 +10,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- General strings -->
-  <string name="app_name">Actualizări CM</string>
+  <string name="app_name">Actualizări</string>
   <string name="display_name">Actualizări</string>
   <string name="unknown">Necunoscut</string>
   <!-- Menu and dialog box strings -->

@@ -10,7 +10,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- General strings -->
-  <string name="app_name">Posodobilnik CM</string>
+  <string name="app_name">Posodobilnik</string>
   <string name="display_name">Posodobitve</string>
   <string name="unknown">Neznano</string>
   <!-- Menu and dialog box strings -->

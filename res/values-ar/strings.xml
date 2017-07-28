@@ -10,7 +10,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- General strings -->
-  <string name="app_name">مُحدّث CM</string>
+  <string name="app_name">مُحدّث</string>
   <string name="display_name">التحديثات</string>
   <string name="unknown">غير معروف</string>
   <!-- Menu and dialog box strings -->

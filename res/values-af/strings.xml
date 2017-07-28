@@ -10,7 +10,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- General strings -->
-  <string name="app_name">CM Opgradeerder</string>
+  <string name="app_name">Opgradeerder</string>
   <string name="display_name">Opgraderings</string>
   <string name="unknown">Onbekend</string>
   <!-- Menu and dialog box strings -->

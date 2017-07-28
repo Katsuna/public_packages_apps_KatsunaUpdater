@@ -10,7 +10,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- General strings -->
-  <string name="app_name">Anovador CM</string>
+  <string name="app_name">Anovador</string>
   <string name="display_name">Anovamientos</string>
   <string name="unknown">Desconocíu</string>
   <!-- Menu and dialog box strings -->
