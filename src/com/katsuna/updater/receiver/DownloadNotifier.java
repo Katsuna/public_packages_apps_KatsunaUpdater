@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2014 The CyanogenMod Project
+ * Copyright (C) 2017 Katsuna
  *
  * * Licensed under the GNU GPLv2 license
  *
