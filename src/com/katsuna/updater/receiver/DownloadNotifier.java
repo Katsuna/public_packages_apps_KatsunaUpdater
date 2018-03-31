@@ -10,6 +10,7 @@
 
 package com.katsuna.updater.receiver;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -23,6 +24,9 @@ import java.io.File;
 
 public class DownloadNotifier {
 
+    private static final String UPDATES_DOWNLOADED_NOTIFICATION_CHANNEL =
+            "updates_downloaded_notification_channel";
+
     private DownloadNotifier() {
         // Don't instantiate me bro
     }
@@ -35,6 +39,14 @@ public class DownloadNotifier {
                 .setBigContentTitle(context.getString(R.string.not_download_success))
                 .bigText(context.getString(R.string.not_download_install_notice, updateUiName));
 
+        NotificationManager mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel mNotificationChannel = new NotificationChannel(
+                UPDATES_DOWNLOADED_NOTIFICATION_CHANNEL,
+                context.getString(R.string.updates_downloaded_channel_title),
+                NotificationManager.IMPORTANCE_LOW);
+        mNotificationManager.createNotificationChannel(mNotificationChannel);
+
         NotificationCompat.Builder builder = createBaseContentBuilder(context, updateIntent)
                 .setSmallIcon(R.drawable.ic_system_update)
                 .setContentTitle(context.getString(R.string.not_download_success))
@@ -45,20 +57,27 @@ public class DownloadNotifier {
                         context.getString(R.string.not_action_install_update),
                         createInstallPendingIntent(context, updateFile));
 
-        ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE))
-                .notify(R.string.not_download_success, builder.build());
+        mNotificationManager.notify(R.string.not_download_success, builder.build());
     }
 
     public static void notifyDownloadError(Context context,
             Intent updateIntent, int failureMessageResId) {
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel mNotificationChannel = new NotificationChannel(
+                UPDATES_DOWNLOADED_NOTIFICATION_CHANNEL,
+                context.getString(R.string.updates_downloaded_channel_title),
+                NotificationManager.IMPORTANCE_LOW);
+        mNotificationManager.createNotificationChannel(mNotificationChannel);
+
         NotificationCompat.Builder builder = createBaseContentBuilder(context, updateIntent)
                 .setSmallIcon(android.R.drawable.stat_notify_error)
                 .setContentTitle(context.getString(R.string.not_download_failure))
                 .setContentText(context.getString(failureMessageResId))
                 .setTicker(context.getString(R.string.not_download_failure));
 
-        ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE))
-                .notify(R.string.not_download_success, builder.build());
+        mNotificationManager.notify(R.string.not_download_success, builder.build());
     }
 
     private static NotificationCompat.Builder createBaseContentBuilder(Context context,
@@ -66,7 +85,7 @@ public class DownloadNotifier {
         PendingIntent contentIntent = PendingIntent.getActivity(context, 1,
                 updateIntent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT);
 
-        return new NotificationCompat.Builder(context)
+        return new NotificationCompat.Builder(context, UPDATES_DOWNLOADED_NOTIFICATION_CHANNEL)
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(contentIntent)
                 .setLocalOnly(true)

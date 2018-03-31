@@ -11,6 +11,7 @@
 package com.katsuna.updater.service;
 
 import android.app.IntentService;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -72,6 +73,9 @@ public class UpdateCheckService extends IntentService
 
     // max. number of updates listed in the expanded notification
     private static final int EXPANDED_NOTIF_UPDATE_COUNT = 4;
+
+    private static final String ONGOING_NOTIFICATION_CHANNEL =
+            "ongoing_notification_channel";
 
     // DefaultRetryPolicy values for Volley
     private static final int UPDATE_REQUEST_TIMEOUT = 5000; // 5 seconds
@@ -136,8 +140,17 @@ public class UpdateCheckService extends IntentService
             String text = res.getQuantityString(R.plurals.not_new_updates_found_body,
                     realUpdateCount, realUpdateCount);
 
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             // Get the notification ready
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+            NotificationChannel notificationChannel = new NotificationChannel(
+                        ONGOING_NOTIFICATION_CHANNEL,
+                    getString(R.string.ongoing_channel_title),
+                    NotificationManager.IMPORTANCE_LOW);
+            mNotificationManager.createNotificationChannel(notificationChannel);
+
+            // Get the notification ready
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
+                          ONGOING_NOTIFICATION_CHANNEL)
                     .setSmallIcon(R.drawable.ic_system_update)
                     .setWhen(System.currentTimeMillis())
                     .setTicker(res.getString(R.string.not_new_updates_found_ticker))
@@ -196,8 +209,7 @@ public class UpdateCheckService extends IntentService
             }
 
             // Trigger the notification
-            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            nm.notify(R.string.not_new_updates_found_title, builder.build());
+            mNotificationManager.notify(R.string.not_new_updates_found_title, builder.build());
         }
 
         sendBroadcast(finishedIntent);

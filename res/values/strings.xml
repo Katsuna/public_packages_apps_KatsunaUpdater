@@ -94,4 +94,8 @@
     <string name="no_changelog_alert">No changelog available</string>
     <string name="changelog_dialog_title">Changelog</string>
     <string name="loading_changelog">Loading\u2026</string>
+
+    <!-- Notification channels -->
+    <string name="updates_downloaded_channel_title">Downloaded updates</string>
+    <string name="ongoing_channel_title">Ongoing downloads</string>
 </resources>
