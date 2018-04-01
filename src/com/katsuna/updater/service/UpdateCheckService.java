@@ -145,7 +145,7 @@ public class UpdateCheckService extends IntentService
             NotificationChannel notificationChannel = new NotificationChannel(
                         ONGOING_NOTIFICATION_CHANNEL,
                     getString(R.string.ongoing_channel_title),
-                    NotificationManager.IMPORTANCE_LOW);
+                    NotificationManager.IMPORTANCE_DEFAULT);
             mNotificationManager.createNotificationChannel(notificationChannel);
 
             // Get the notification ready
