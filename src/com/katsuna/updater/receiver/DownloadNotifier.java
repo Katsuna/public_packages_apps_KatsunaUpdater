@@ -44,7 +44,7 @@ public class DownloadNotifier {
         NotificationChannel mNotificationChannel = new NotificationChannel(
                 UPDATES_DOWNLOADED_NOTIFICATION_CHANNEL,
                 context.getString(R.string.updates_downloaded_channel_title),
-                NotificationManager.IMPORTANCE_DEFAULT);
+                NotificationManager.IMPORTANCE_HIGH);
         mNotificationManager.createNotificationChannel(mNotificationChannel);
 
         NotificationCompat.Builder builder = createBaseContentBuilder(context, updateIntent)
