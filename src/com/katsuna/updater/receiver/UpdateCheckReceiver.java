@@ -26,7 +26,7 @@ import com.katsuna.updater.utils.Utils;
 public class UpdateCheckReceiver extends BroadcastReceiver {
     private static final String TAG = "UpdateCheckReceiver";
 
-    private static final int UPDATE_CHECK_JOB_ID = 1;
+    public static final int UPDATE_CHECK_JOB_ID = 1;
 
     @Override
     public void onReceive(Context context, Intent intent) {

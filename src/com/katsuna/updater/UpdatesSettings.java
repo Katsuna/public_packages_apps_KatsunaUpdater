@@ -35,6 +35,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.JobIntentService;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -49,6 +50,7 @@ import com.katsuna.updater.misc.Constants;
 import com.katsuna.updater.misc.State;
 import com.katsuna.updater.misc.UpdateInfo;
 import com.katsuna.updater.receiver.DownloadReceiver;
+import com.katsuna.updater.receiver.UpdateCheckReceiver;
 import com.katsuna.updater.service.UpdateCheckService;
 import com.katsuna.updater.utils.UpdateFilter;
 import com.katsuna.updater.utils.Utils;
@@ -532,7 +534,7 @@ public class UpdatesSettings extends PreferenceActivity implements
 
         Intent checkIntent = new Intent(UpdatesSettings.this, UpdateCheckService.class);
         checkIntent.setAction(UpdateCheckService.ACTION_CHECK);
-        startService(checkIntent);
+        JobIntentService.enqueueWork(this, UpdateCheckService.class, UpdateCheckReceiver.UPDATE_CHECK_JOB_ID, checkIntent);
 
         mProgressDialog.show();
     }
