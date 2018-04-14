@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
+import android.support.v4.app.JobIntentService;
 import android.util.Log;
 
 import com.katsuna.updater.misc.Constants;
@@ -24,6 +25,8 @@ import com.katsuna.updater.utils.Utils;
 
 public class UpdateCheckReceiver extends BroadcastReceiver {
     private static final String TAG = "UpdateCheckReceiver";
+
+    private static final int UPDATE_CHECK_JOB_ID = 1;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -57,7 +60,7 @@ public class UpdateCheckReceiver extends BroadcastReceiver {
                 Log.i(TAG, "Start an on-boot check");
                 Intent i = new Intent(context, UpdateCheckService.class);
                 i.setAction(UpdateCheckService.ACTION_CHECK);
-                context.startService(i);
+                JobIntentService.enqueueWork(context, UpdateCheckService.class, UPDATE_CHECK_JOB_ID, i);
             } else {
                 // Nothing to do
                 Log.i(TAG, "On-boot update check was already completed.");

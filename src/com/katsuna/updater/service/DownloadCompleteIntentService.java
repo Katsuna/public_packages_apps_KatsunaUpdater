@@ -11,11 +11,11 @@
 package com.katsuna.updater.service;
 
 import android.app.DownloadManager;
-import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.v4.app.JobIntentService;
 
 import com.katsuna.updater.R;
 import com.katsuna.updater.UpdateApplication;
@@ -26,7 +26,7 @@ import com.katsuna.updater.utils.MD5;
 
 import java.io.File;
 
-public class DownloadCompleteIntentService extends IntentService {
+public class DownloadCompleteIntentService extends JobIntentService {
     private DownloadManager mDm;
 
     @Override
@@ -35,12 +35,8 @@ public class DownloadCompleteIntentService extends IntentService {
         mDm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
     }
 
-    public DownloadCompleteIntentService() {
-        super(DownloadCompleteIntentService.class.getSimpleName());
-    }
-
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleWork(Intent intent) {
         if (!intent.hasExtra(Constants.DOWNLOAD_ID) ||
                 !intent.hasExtra(Constants.DOWNLOAD_MD5)) {
             return;

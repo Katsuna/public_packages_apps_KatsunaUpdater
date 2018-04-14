@@ -11,7 +11,6 @@
 package com.katsuna.updater.service;
 
 import android.app.DownloadManager;
-import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +18,7 @@ import android.net.Uri;
 import android.os.Parcelable;
 import android.os.SystemProperties;
 import android.preference.PreferenceManager;
+import android.support.v4.app.JobIntentService;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -42,11 +42,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
-public class DownloadService extends IntentService
+public class DownloadService extends JobIntentService
         implements Response.Listener<JSONObject>, Response.ErrorListener {
     private static final String TAG = DownloadService.class.getSimpleName();
 
     private static final String EXTRA_UPDATE_INFO = "update_info";
+
+    private static final int DOWNLOAD_JOB_ID = 3;
 
     private SharedPreferences mPrefs;
     private UpdateInfo mInfo = null;
@@ -56,15 +58,11 @@ public class DownloadService extends IntentService
         Intent intent = new Intent(context, DownloadService.class);
         intent.putExtra(EXTRA_UPDATE_INFO, (Parcelable) ui);
         mDaysBeforeCleanUp = context.getResources().getInteger(R.integer.config_daysBeforeCleanUp);
-        context.startService(intent);
-    }
-
-    public DownloadService() {
-        super(TAG);
+        JobIntentService.enqueueWork(context, DownloadService.class, DOWNLOAD_JOB_ID, intent);
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleWork(Intent intent) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mInfo = intent.getParcelableExtra(EXTRA_UPDATE_INFO);
 

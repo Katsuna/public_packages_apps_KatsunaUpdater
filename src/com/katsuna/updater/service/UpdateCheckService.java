@@ -10,7 +10,7 @@
 
 package com.katsuna.updater.service;
 
-import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -20,7 +20,7 @@ import android.content.res.Resources;
 import android.os.Parcelable;
 import android.os.SystemProperties;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.JobIntentService;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -49,7 +49,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 
-public class UpdateCheckService extends IntentService
+public class UpdateCheckService extends JobIntentService
         implements Response.ErrorListener, Response.Listener<JSONObject> {
 
     private static final String TAG = "UpdateCheckService";
@@ -81,10 +81,6 @@ public class UpdateCheckService extends IntentService
     private static final int UPDATE_REQUEST_TIMEOUT = 5000; // 5 seconds
     private static final int UPDATE_REQUEST_MAX_RETRIES = 3;
 
-    public UpdateCheckService() {
-        super("UpdateCheckService");
-    }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (TextUtils.equals(intent.getAction(), ACTION_CANCEL_CHECK)) {
@@ -96,12 +92,13 @@ public class UpdateCheckService extends IntentService
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleWork(Intent intent) {
         if (!Utils.isOnline(this)) {
             // Only check for updates if the device is actually connected to a network
             Log.i(TAG, "Could not check for updates. Not connected to the network.");
             return;
         }
+
         getAvailableUpdates();
     }
 
@@ -149,8 +146,9 @@ public class UpdateCheckService extends IntentService
             mNotificationManager.createNotificationChannel(notificationChannel);
 
             // Get the notification ready
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
-                          ONGOING_NOTIFICATION_CHANNEL)
+            Notification.Builder builder = new Notification.Builder(this,
+                          ONGOING_NOTIFICATION_CHANNEL);
+            Notification notification = builder
                     .setSmallIcon(R.drawable.ic_system_update)
                     .setWhen(System.currentTimeMillis())
                     .setTicker(res.getString(R.string.not_new_updates_found_ticker))
@@ -158,7 +156,8 @@ public class UpdateCheckService extends IntentService
                     .setContentText(text)
                     .setContentIntent(contentIntent)
                     .setLocalOnly(true)
-                    .setAutoCancel(true);
+                    .setAutoCancel(true)
+                    .build();
 
             LinkedList<UpdateInfo> realUpdates = new LinkedList<UpdateInfo>();
             for (UpdateInfo ui : availableUpdates) {
@@ -180,7 +179,7 @@ public class UpdateCheckService extends IntentService
                 }
             });
 
-            NotificationCompat.InboxStyle inbox = new NotificationCompat.InboxStyle(builder)
+            Notification.InboxStyle inbox = new Notification.InboxStyle(builder)
                     .setBigContentTitle(text);
             int added = 0, count = realUpdates.size();
 

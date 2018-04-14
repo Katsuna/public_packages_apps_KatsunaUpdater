@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.JobIntentService;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ public class DownloadReceiver extends BroadcastReceiver{
 
     static final String ACTION_INSTALL_UPDATE = "com.katsuna.updater.action.INSTALL_UPDATE";
     static final String EXTRA_FILENAME = "filename";
+
+    private static final int DOWNLOAD_COMPLETED_JOB_ID = 2;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -84,7 +87,7 @@ public class DownloadReceiver extends BroadcastReceiver{
         intent.putExtra(Constants.DOWNLOAD_ID, id);
         intent.putExtra(Constants.DOWNLOAD_MD5, downloadedMD5);
         intent.putExtra(Constants.DOWNLOAD_INCREMENTAL_FOR, incrementalFor);
-        context.startService(intent);
+        JobIntentService.enqueueWork(context, DownloadCompleteIntentService.class, DOWNLOAD_COMPLETED_JOB_ID, intent);
 
         // Clear the shared prefs
         prefs.edit()

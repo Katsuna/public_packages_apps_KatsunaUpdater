@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.katsuna.updater"
-    android:versionCode="4"
-    android:versionName="2.3" >
+    android:versionCode="5"
+    android:versionName="3" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -53,9 +53,12 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.katsuna.updater.service.UpdateCheckService" />
-        <service android:name="com.katsuna.updater.service.DownloadService" />
-        <service android:name="com.katsuna.updater.service.DownloadCompleteIntentService" />
+        <service android:name="com.katsuna.updater.service.UpdateCheckService"
+                 android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service android:name="com.katsuna.updater.service.DownloadService"
+                 android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service android:name="com.katsuna.updater.service.DownloadCompleteIntentService"
+                 android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver android:name="com.katsuna.updater.receiver.UpdateCheckReceiver">
             <intent-filter>
