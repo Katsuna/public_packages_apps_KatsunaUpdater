@@ -19,13 +19,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.katsuna.updater.misc.FetchChangeLogTask;
 import com.katsuna.updater.misc.UpdateInfo;
 
 import java.io.File;
@@ -131,8 +129,7 @@ public class UpdatePreference extends Preference implements OnClickListener, OnL
 
     @Override
     public void onClick(View v) {
-        final Context context = getContext();
-        new FetchChangeLogTask(context).execute(mUpdateInfo);
+        // no op
     }
 
     private void confirmDelete() {
