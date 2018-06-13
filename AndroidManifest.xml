@@ -39,20 +39,6 @@
              </intent-filter>
         </activity>
 
-        <activity
-            android:name=".UpdatesSettingsTv"
-            android:theme="@style/Theme.Tv"
-            android:launchMode="singleTop"
-            android:hardwareAccelerated="true"
-            android:label="@string/display_name"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:excludeFromRecents="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.settings.SHORTCUT" />
-            </intent-filter>
-        </activity>
-
         <service android:name="com.katsuna.updater.service.UpdateCheckService"
                  android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name="com.katsuna.updater.service.DownloadService"

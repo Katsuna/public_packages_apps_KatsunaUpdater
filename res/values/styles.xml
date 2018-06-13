@@ -13,10 +13,6 @@
         <item name="android:actionBarStyle">@style/Theme.ActionBar.SubSettings</item>
     </style>
 
-    <style name="Theme.Tv" parent="style/Theme.Leanback">
-        <item name="android:textSize">18dp</item>
-    </style>
-
     <style name="UpdatesPreferenceStyle">
         <item name="android:layout">@layout/preference_updates</item>
     </style>
