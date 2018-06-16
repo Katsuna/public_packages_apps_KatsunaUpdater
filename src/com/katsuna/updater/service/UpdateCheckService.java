@@ -14,6 +14,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -89,6 +90,13 @@ public class UpdateCheckService extends JobIntentService
         }
 
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    /**
+     * Convenience method for enqueuing work in to this service.
+     */
+    public static void enqueueWork(Context context, Intent work) {
+        enqueueWork(context, UpdateCheckService.class, Constants.UPDATE_CHECK_JOB_ID, work);
     }
 
     @Override

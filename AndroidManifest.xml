@@ -46,12 +46,19 @@
         <service android:name="com.katsuna.updater.service.DownloadCompleteIntentService"
                  android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <receiver android:name="com.katsuna.updater.receiver.UpdateCheckReceiver">
+        <receiver android:name="com.katsuna.updater.receiver.BootCheckReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name="com.katsuna.updater.receiver.UpdateAlarmReceiver">
+            <intent-filter>
+                <action android:name="com.katsuna.updater.action.CHECK"/>
+            </intent-filter>
+        </receiver>
+
         <receiver android:name="com.katsuna.updater.receiver.DownloadReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>

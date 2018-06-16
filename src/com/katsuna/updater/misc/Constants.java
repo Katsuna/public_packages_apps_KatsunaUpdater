@@ -41,4 +41,7 @@ public class Constants {
     public static final String PROPERTY_CM_RELEASETYPE = "ro.cm.releasetype";
     public static final String CM_RELEASETYPE_SNAPSHOT = "SNAPSHOT";
     public static final String CM_RELEASETYPE_NIGHTLY = "NIGHTLY";
+
+    // Job Intent IDs
+    public static final int UPDATE_CHECK_JOB_ID = 1;
 }

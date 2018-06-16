@@ -50,7 +50,7 @@ import com.katsuna.updater.misc.Constants;
 import com.katsuna.updater.misc.State;
 import com.katsuna.updater.misc.UpdateInfo;
 import com.katsuna.updater.receiver.DownloadReceiver;
-import com.katsuna.updater.receiver.UpdateCheckReceiver;
+import com.katsuna.updater.receiver.BootCheckReceiver;
 import com.katsuna.updater.service.UpdateCheckService;
 import com.katsuna.updater.utils.UpdateFilter;
 import com.katsuna.updater.utils.Utils;
@@ -534,7 +534,7 @@ public class UpdatesSettings extends PreferenceActivity implements
 
         Intent checkIntent = new Intent(UpdatesSettings.this, UpdateCheckService.class);
         checkIntent.setAction(UpdateCheckService.ACTION_CHECK);
-        JobIntentService.enqueueWork(this, UpdateCheckService.class, UpdateCheckReceiver.UPDATE_CHECK_JOB_ID, checkIntent);
+        JobIntentService.enqueueWork(this, UpdateCheckService.class, Constants.UPDATE_CHECK_JOB_ID, checkIntent);
 
         mProgressDialog.show();
     }

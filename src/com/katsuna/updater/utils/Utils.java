@@ -33,6 +33,7 @@ import android.util.Log;
 
 import com.katsuna.updater.R;
 import com.katsuna.updater.misc.Constants;
+import com.katsuna.updater.receiver.UpdateAlarmReceiver;
 import com.katsuna.updater.service.UpdateCheckService;
 
 import java.io.File;
@@ -101,16 +102,17 @@ public class Utils {
         long lastCheck = prefs.getLong(Constants.LAST_UPDATE_CHECK_PREF, 0);
 
         // Get the intent ready
-        Intent i = new Intent(context, UpdateCheckService.class);
+        Intent i = new Intent(context, UpdateAlarmReceiver.class);
         i.setAction(UpdateCheckService.ACTION_CHECK);
-        PendingIntent pi = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Clear any old alarms and schedule the new alarm
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
 
         if (updateFrequency != Constants.UPDATE_FREQ_NONE) {
-            am.setRepeating(AlarmManager.RTC_WAKEUP, lastCheck + updateFrequency, updateFrequency, pi);
+            Log.i("UpdateAlarm", "alarm scheduled!");
+            am.setInexactRepeating(AlarmManager.RTC_WAKEUP, lastCheck + updateFrequency, updateFrequency, pi);
         }
     }
 
