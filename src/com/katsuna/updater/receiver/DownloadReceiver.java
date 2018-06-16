@@ -41,8 +41,6 @@ public class DownloadReceiver extends BroadcastReceiver{
     static final String ACTION_INSTALL_UPDATE = "com.katsuna.updater.action.INSTALL_UPDATE";
     static final String EXTRA_FILENAME = "filename";
 
-    private static final int DOWNLOAD_COMPLETED_JOB_ID = 2;
-
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
@@ -87,7 +85,8 @@ public class DownloadReceiver extends BroadcastReceiver{
         intent.putExtra(Constants.DOWNLOAD_ID, id);
         intent.putExtra(Constants.DOWNLOAD_MD5, downloadedMD5);
         intent.putExtra(Constants.DOWNLOAD_INCREMENTAL_FOR, incrementalFor);
-        JobIntentService.enqueueWork(context, DownloadCompleteIntentService.class, DOWNLOAD_COMPLETED_JOB_ID, intent);
+        JobIntentService.enqueueWork(context, DownloadCompleteIntentService.class,
+                Constants.DOWNLOAD_COMPLETED_JOB_ID, intent);
 
         // Clear the shared prefs
         prefs.edit()

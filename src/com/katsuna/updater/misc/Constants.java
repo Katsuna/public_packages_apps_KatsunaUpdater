@@ -44,4 +44,6 @@ public class Constants {
 
     // Job Intent IDs
     public static final int UPDATE_CHECK_JOB_ID = 1;
+    public static final int DOWNLOAD_COMPLETED_JOB_ID = 2;
+    public static final int DOWNLOAD_JOB_ID = 3;
 }

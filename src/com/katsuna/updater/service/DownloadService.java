@@ -48,8 +48,6 @@ public class DownloadService extends JobIntentService
 
     private static final String EXTRA_UPDATE_INFO = "update_info";
 
-    private static final int DOWNLOAD_JOB_ID = 3;
-
     private SharedPreferences mPrefs;
     private UpdateInfo mInfo = null;
     private static int mDaysBeforeCleanUp;
@@ -58,7 +56,7 @@ public class DownloadService extends JobIntentService
         Intent intent = new Intent(context, DownloadService.class);
         intent.putExtra(EXTRA_UPDATE_INFO, (Parcelable) ui);
         mDaysBeforeCleanUp = context.getResources().getInteger(R.integer.config_daysBeforeCleanUp);
-        JobIntentService.enqueueWork(context, DownloadService.class, DOWNLOAD_JOB_ID, intent);
+        JobIntentService.enqueueWork(context, DownloadService.class, Constants.DOWNLOAD_JOB_ID, intent);
     }
 
     @Override
