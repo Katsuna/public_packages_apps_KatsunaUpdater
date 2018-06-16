@@ -16,8 +16,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
 import android.os.Parcelable;
 import android.os.SystemProperties;
 import android.preference.PreferenceManager;
@@ -37,6 +39,7 @@ import com.katsuna.updater.UpdatesSettings;
 import com.katsuna.updater.misc.Constants;
 import com.katsuna.updater.misc.State;
 import com.katsuna.updater.misc.UpdateInfo;
+import com.katsuna.updater.receiver.BootCheckReceiver;
 import com.katsuna.updater.receiver.DownloadReceiver;
 import com.katsuna.updater.utils.Utils;
 
@@ -104,6 +107,8 @@ public class UpdateCheckService extends JobIntentService
         if (!Utils.isOnline(this)) {
             // Only check for updates if the device is actually connected to a network
             Log.i(TAG, "Could not check for updates. Not connected to the network.");
+            getApplicationContext().registerReceiver(new BootCheckReceiver(),
+                    new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
             return;
         }
 
