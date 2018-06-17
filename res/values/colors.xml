@@ -9,7 +9,10 @@
      or at https://www.gnu.org/licenses/gpl-2.0.txt
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <color name="refresh_icon_color">?android:attr/colorAccent</color>
+    <color name="common_blue900">#0D47A1</color>
+    <color name="common_black87">#DE000000</color>
+    <color name="refresh_icon_color">@color/common_black87</color>
     <color name="notification_icon_color">@android:color/white</color>
-    <color name="action_icons_color">?android:attr/colorAccent</color>
+    <color name="action_icons_color">@color/common_blue900</color>
+    <color name="common_grey50">#FAFAFA</color>
 </resources>

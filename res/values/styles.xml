@@ -8,9 +8,19 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <style name="Theme.Main" parent="@android:style/Theme.DeviceDefault.Settings">
+    <style name="Theme.Main" parent="@android:style/Theme.Material.Light">
         <!-- Redefine the ActionBar style for contentInsetStart -->
         <item name="android:actionBarStyle">@style/Theme.ActionBar.SubSettings</item>
+        <item name="android:windowBackground">@color/common_grey50</item>
+        <item name="android:colorPrimary">#E0E0E0</item>
+        <item name="android:colorAccent">@color/common_blue900</item>
+        <item name="android:colorPrimaryDark">#757575</item>
+        <item name="android:textColor">#DE000000</item>
+        <item name="android:textColorHint">#8A000000</item>
+        <item name="android:textColorPrimary">#DE000000</item>
+        <item name="android:textColorSecondary">#8A000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:letterSpacing">0.08</item>
     </style>
 
     <style name="UpdatesPreferenceStyle">
