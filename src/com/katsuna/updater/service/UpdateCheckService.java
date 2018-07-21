@@ -10,6 +10,7 @@
 
 package com.katsuna.updater.service;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -19,11 +20,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.os.Parcelable;
 import android.os.SystemProperties;
 import android.preference.PreferenceManager;
 import android.support.v4.app.JobIntentService;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -216,8 +219,13 @@ public class UpdateCheckService extends JobIntentService
                 PendingIntent downloadIntent = PendingIntent.getBroadcast(this, 0, i,
                         PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT);
 
-                builder.addAction(R.drawable.ic_tab_download,
-                        res.getString(R.string.not_action_download), downloadIntent);
+                // If the app hasn't been granted permissions, remove download button
+                if (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    builder.addAction(R.drawable.ic_tab_download,
+                            res.getString(R.string.not_action_download), downloadIntent);
+                }
             }
 
             // Trigger the notification
