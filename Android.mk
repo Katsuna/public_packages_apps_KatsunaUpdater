@@ -10,7 +10,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v7-recyclerview \
     android-support-v13 \
     android-support-v17-leanback \
-    volley
+    samkirtonvolley
 
 LOCAL_RESOURCE_DIR := \
     $(TOP)/frameworks/support/v17/leanback/res \
