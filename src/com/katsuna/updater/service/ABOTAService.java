@@ -10,6 +10,7 @@
 package com.katsuna.updater.service;
 
 import android.app.IntentService;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -58,6 +59,9 @@ public class ABOTAService extends IntentService {
     private boolean errorCaught = false;
     private String mFilename;
     private final String updatePackageDir = "/data/ota_package/" + Constants.UPDATES_FOLDER;
+
+    private static final String ONGOING_INSTALLING_NOTIFICATION_CHANNEL =
+            "ongoing_installing_notification_channel";
 
     public ABOTAService() {
         super("ABOTAService");
@@ -215,7 +219,17 @@ public class ABOTAService extends IntentService {
     }
 
     public static void notifyOngoingABOTA(Context context, int progress, int status) {
-        Builder builder = new Builder(context).setSmallIcon(R.drawable.ic_system_update);
+        Builder builder = new Builder(context, ONGOING_INSTALLING_NOTIFICATION_CHANNEL)
+                .setSmallIcon(R.drawable.ic_system_update);
+
+        NotificationManager mNotificationManager = (NotificationManager)
+                context.getSystemService(NOTIFICATION_SERVICE);
+        // Get the notification ready
+        NotificationChannel notificationChannel = new NotificationChannel(
+                ONGOING_INSTALLING_NOTIFICATION_CHANNEL,
+        context.getString(R.string.ongoing_installing_channel_title),
+        NotificationManager.IMPORTANCE_DEFAULT);
+        mNotificationManager.createNotificationChannel(notificationChannel);
 
         switch (status) {
             case STATUS_PREPARING_ZIP:
@@ -241,8 +255,7 @@ public class ABOTAService extends IntentService {
                            .setContentText(String.format("%1$d%%", progress))
                            .setContentTitle(context.getString(R.string.preparing_ota_first_boot));
                 } else {
-                    ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE))
-                        .cancel(R.string.installing_package);
+                    mNotificationManager.cancel(R.string.installing_package);
 
                     builder.setContentText(context.getString(R.string.installing_package_finished))
                            .setOngoing(true)
@@ -253,8 +266,7 @@ public class ABOTAService extends IntentService {
                 break;
 
             case UpdateStatusConstants.UPDATED_NEED_REBOOT:
-                ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE))
-                    .cancel(R.string.installing_package);
+                mNotificationManager.cancel(R.string.installing_package);
 
                 builder.setContentText(context.getString(R.string.installing_package_finished))
                        .setOngoing(true)
@@ -269,8 +281,7 @@ public class ABOTAService extends IntentService {
                 break;
         }
 
-        ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE))
-                .notify(R.string.installing_package, builder.build());
+        mNotificationManager.notify(R.string.installing_package, builder.build());
     }
 
     private static PendingIntent createRebootPendingIntent(Context context) {

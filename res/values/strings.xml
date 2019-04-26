@@ -104,7 +104,8 @@
 
     <!-- Notification channels -->
     <string name="updates_downloaded_channel_title">Downloaded updates</string>
-    <string name="ongoing_channel_title">Ongoing downloads</string>
+    <string name="ongoing_channel_title">Ongoing updates</string>
+    <string name="ongoing_installing_channel_title">Ongoing update installations</string>
 
     <!-- Build item -->
     <string name="type_installed">• Installed</string>
