@@ -228,7 +228,7 @@ public class ABOTAService extends IntentService {
         NotificationChannel notificationChannel = new NotificationChannel(
                 ONGOING_INSTALLING_NOTIFICATION_CHANNEL,
         context.getString(R.string.ongoing_installing_channel_title),
-        NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationManager.IMPORTANCE_LOW);
         mNotificationManager.createNotificationChannel(notificationChannel);
 
         switch (status) {
